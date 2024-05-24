@@ -407,9 +407,12 @@ class ExtendedPlugin(BasePlugin[I18nPluginConfig]):
 
         for item in nav:
             if hasattr(item, 'url'):
-                if item.url.endswith('.md'):
+                if item.__class__.__name__ == 'Link' and item.url.endswith('.md'):
                     item.title = item.url[:-3]
-                    item.url = item.url[:-3]+".html"
+                    if item.url.endswith('index.md'):
+                        item.url = item.url[:-8]
+                    else:
+                        item.url = item.url[:-3]
             if hasattr(item, "title") and item.title in nav_translations:
                 item.title = nav_translations[item.title]
                 nav_helper.translated_items += 1
