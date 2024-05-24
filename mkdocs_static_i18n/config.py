@@ -84,6 +84,7 @@ class I18nPluginConfig(Config):
     """ """
 
     build_only_locale = config_options.Optional(Locale(str))
+    exclude_folders = config_options.ListOfPaths()
     docs_structure = config_options.Choice(["folder", "suffix"], default="suffix")
     fallback_to_default = config_options.Type(bool, default=True)
     reconfigure_material = config_options.Type(bool, default=True)

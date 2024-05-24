@@ -406,6 +406,9 @@ class ExtendedPlugin(BasePlugin[I18nPluginConfig]):
         nav_translations = self.current_language_config.nav_translations or {}
 
         for item in nav:
+            if hasattr(item, 'url'):
+                if item.url.endswith('.md'):
+                    item.url = item.url[:-3]+".html"
             if hasattr(item, "title") and item.title in nav_translations:
                 item.title = nav_translations[item.title]
                 nav_helper.translated_items += 1
@@ -536,6 +539,21 @@ class ExtendedPlugin(BasePlugin[I18nPluginConfig]):
         i18n_files = I18nFiles(self, [])
         i18n_alternate_src_uris = defaultdict(list)
         for file in files:
+            if any(
+                file.abs_src_path.startswith(exclude_folder)
+                for exclude_folder in self.config.get('exclude_folders', [])
+            ):  
+                # only build default_language
+                if self.current_language == self.default_language:
+                    i18n_file = create_i18n_file(
+                        file,
+                        self.current_language,
+                        self.default_language,
+                        self.all_languages,
+                        mkdocs_config,
+                    )
+                    i18n_files.append(i18n_file)
+                continue
             # user provided files in docs_dir
             if is_relative_to(file.abs_src_path, mkdocs_config.docs_dir):
                 i18n_file = create_i18n_file(

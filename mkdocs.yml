@@ -39,9 +39,9 @@ markdown_extensions:
       custom_checkbox: true
   - pymdownx.tabbed:
       alternate_style: true
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  # - pymdownx.emoji:
+  #     emoji_index: !!python/name:material.extensions.emoji.twemoji
+  #     emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 nav:
   - Home: index.md
@@ -72,6 +72,8 @@ plugins:
       fallback_to_default: true
       reconfigure_material: true
       reconfigure_search: true
+      exclude_folders:
+        - docs/setup
       languages:
         - locale: en
           default: true
@@ -89,3 +91,4 @@ plugins:
             Home: Accueil
             Getting Started: Démarrage Rapide
             Plugins Compatibility: Compatibilité des plugins
+            Configuration: Configuration(no fr version)
